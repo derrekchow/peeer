@@ -30,7 +30,10 @@
 		"envs": [
 			"node",
 			"browser"
-		]
+		],
+		"rules": {
+			"unicorn/prefer-module": "off"
+		}
 	},
 	"np": {
 		"publish": false,
