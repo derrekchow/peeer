@@ -1,18 +1,24 @@
-<!doctype html>
+<!--index.html-->
+
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Electron boilerplate</title>
-		<link rel="stylesheet" href="index.css">
-	</head>
-	<body>
-		<div class="container">
-			<header>
-				<h1>Electron boilerplate</h1>
-				<p></p>
-			</header>
-			<section class="main"></section>
-			<footer></footer>
-		</div>
-	</body>
+    <head>
+        <meta charset="UTF-8">
+        <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+        <title>peeer</title>
+        <link rel="stylesheet" type="text/css" href="index.css">
+    </head>
+    <body>
+        <!-- <img src="top.png" id="top">
+        <img src="bottom.png" id="bottom"> -->
+
+        
+        <video autoplay="true" id="video"></video>
+        <canvas id="canvas"></canvas>
+        <img id="image" /> 
+
+        <script src="./renderer.js"></script>
+    </body>
 </html>
+

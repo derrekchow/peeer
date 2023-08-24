@@ -1,15 +1,8 @@
 {
-	"name": "app-name",
-	"productName": "App Name",
+	"name": "peeer",
+	"productName": "peeer",
 	"version": "0.0.0",
-	"description": "The best app ever",
-	"license": "MIT",
-	"repository": "sindresorhus/electron-boilerplate",
-	"author": {
-		"name": "Your Name",
-		"email": "user@gmail.com",
-		"url": "https://sindresorhus.com"
-	},
+	"repository": "derrekchow/peeer",
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
 		"lint": "xo",
@@ -37,20 +30,30 @@
 		"envs": [
 			"node",
 			"browser"
-		],
-		"rules": {
-			"unicorn/prefer-module": "off"
-		}
+		]
 	},
 	"np": {
 		"publish": false,
 		"releaseDraft": false
 	},
 	"build": {
-		"appId": "com.company.AppName",
+		"appId": "com.interhouse.peeer",
 		"mac": {
-			"category": "public.app-category.social-networking",
-			"darkModeSupport": true
+			"category": "public.app-category.photography",
+			"darkModeSupport": true,
+			"fileAssociations": [
+				{
+				  "ext": [
+					"jpg",
+					"jpeg",
+					"png",
+					"PNG",
+					"tiff"
+				  ],
+				  "description": "Image files",
+				  "role": "Viewer"
+				}
+			]
 		},
 		"dmg": {
 			"iconSize": 160,
@@ -66,13 +69,6 @@
 					"path": "/Applications"
 				}
 			]
-		},
-		"linux": {
-			"target": [
-				"AppImage",
-				"deb"
-			],
-			"category": "Network;Chat"
 		}
 	}
 }
