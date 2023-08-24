@@ -1,7 +1,7 @@
 {
 	"name": "peeer",
 	"productName": "peeer",
-	"version": "0.0.1-0",
+	"version": "0.1.0",
 	"repository": "derrekchow/peeer",
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
