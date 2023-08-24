@@ -5,23 +5,46 @@ let image = document.getElementById("image")
 
 let w = window.innerWidth
 let h = window.innerHeight
+let flipped = false
 
-// window.electronAPI.setImagePath((_event, path) => {
-//     image.src = path
-// })
-
-// window.electronAPI.saveCanvas((_event, value) => {
-//     saveCanvas()
-// })
-
-window.addEventListener("cut", (e) => {
-    image.src = ""
+window.electronAPI.setImagePath((_event, path) => {
+    image.src = path
 })
 
-window.addEventListener("copy", (e) => {
+window.electronAPI.saveCanvas((_event, value) => {
+    saveCanvas()
+})
+
+window.electronAPI.flipCanvas((_event, value) => {
+    flipped = !flipped
+})
+
+function copyCanvas() {
     canvas.toBlob(
         blob => navigator.clipboard.write([new ClipboardItem({'image/png': blob})])
     )
+}
+
+window.addEventListener("click", (e) => {
+    flipped = !flipped
+})
+
+window.addEventListener("cut", (e) => {
+    fullCanvas()
+
+    ctx.drawImage(image, 0, 0, w, h);
+    copyCanvas()
+    
+    image.src = ""
+    restoreCanvas()
+})
+
+window.addEventListener("copy", (e) => {
+    fullCanvas()
+
+    copyCanvas()
+
+    restoreCanvas()
 })
 
 window.addEventListener("paste", (e) => {
@@ -31,10 +54,20 @@ window.addEventListener("paste", (e) => {
     }
 })
 
-function saveCanvas() {
+function fullCanvas() {
     w = 3264
     h = 2448
     drawImage()
+}
+
+function restoreCanvas() {
+    w = window.innerWidth
+    h = window.innerHeight
+    drawImage()
+}
+
+function saveCanvas() {
+    fullCanvas()
 
     let canvasUrl = canvas.toDataURL();
     // Create an anchor, and set the href value to our data URL
@@ -42,14 +75,13 @@ function saveCanvas() {
     createEl.href = canvasUrl;
 
     // This is the name of our downloaded file
-    createEl.download = "download-this-canvas";
+    createEl.download = "peeer";
 
     // Click the download button, causing a download, and then remove it
     createEl.click();
     createEl.remove();
 
-    w = window.innerWidth
-    h = window.innerHeight
+    restoreCanvas()
 }
 
 document.addEventListener('dragover', (e) => {
@@ -93,9 +125,19 @@ function drawImage() {
     canvas.width = w
     canvas.height = h
     
+    if (flipped) {
+        ctx.save()
+        ctx.translate(w, 0);
+        ctx.scale(-1, 1);
+    }
+
     ctx.drawImage(video, 0, 0, w, h);
     var videoCtx = ctx.getImageData(0, 0, w, h);
     var videoData = videoCtx.data;
+    
+    if (flipped) {
+        ctx.restore()
+    }
     
     if (image.getAttribute('src')) {
         ctx.drawImage(image, 0, 0, w, h);
@@ -110,6 +152,8 @@ function drawImage() {
 
     videoCtx.data = videoData;
     ctx.putImageData(videoCtx, 0, 0);
+
+    canvas
 }
 
 

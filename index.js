@@ -1,13 +1,11 @@
 'use strict';
 const path = require('path');
-const {app, BrowserWindow, Menu} = require('electron');
+const {app, BrowserWindow, Menu, dialog} = require('electron');
 /// const {autoUpdater} = require('electron-updater');
 const {is} = require('electron-util');
 const unhandled = require('electron-unhandled');
-const debug = require('electron-debug');
 
 unhandled();
-debug();
 
 // Note: Must match `build.appId` in package.json
 app.setAppUserModelId('com.interhouse.peeer');
@@ -29,6 +27,9 @@ let mainWindow;
 const createMainWindow = async () => {
 	const window_ = new BrowserWindow({
 		title: app.name,
+		webPreferences: {
+			preload: path.join(__dirname, 'preload.js')
+		}
 	});
 
 	window_.on('ready-to-show', () => {
@@ -40,6 +41,14 @@ const createMainWindow = async () => {
 		// For multiple windows store them in an array
 		mainWindow = undefined;
 	});
+
+	window_.on('open-file', function(e, path) {
+		window_.webContents.send('set-image-path', path)
+	})
+
+	// and load the index.html of the app.
+	window_.loadFile('index.html')
+	window_.setAspectRatio(4/3)
 
 	window_.setAspectRatio(4/3)
 
@@ -99,6 +108,12 @@ app.on('activate', async () => {
 				  mainWindow.webContents.send('save-canvas')
 				}
 			  },
+			  {
+				label: 'Flip Horizontal',
+				click: (item, mainWindow, event) => {
+				  mainWindow.webContents.send('flip-canvas')
+				}
+			  }
 		   ]
 		},
 		{
@@ -106,7 +121,7 @@ app.on('activate', async () => {
 		  submenu: [
 			{ role: 'cut' },
 			{ role: 'copy' },
-			{ role: 'paste' }
+			{ role: 'paste' },
 		  ]
 		}
 	]
