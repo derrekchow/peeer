@@ -9,7 +9,7 @@
 		"test": "",
 		"start": "electron .",
 		"pack": "electron-builder --dir",
-		"dist": "electron-builder --macos --linux --windows",
+		"dist": "electron-builder --macos",
 		"release": "np"
 	},
 	"dependencies": {
