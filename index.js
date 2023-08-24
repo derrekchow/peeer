@@ -1,13 +1,10 @@
-'use strict';
 const path = require('path');
 const {app, BrowserWindow, Menu, dialog} = require('electron');
-/// const {autoUpdater} = require('electron-updater');
 const {is} = require('electron-util');
 const unhandled = require('electron-unhandled');
 
 unhandled();
 
-// Note: Must match `build.appId` in package.json
 app.setAppUserModelId('com.interhouse.peeer');
 
 // Uncomment this before publishing your first version.
@@ -129,6 +126,4 @@ app.on('activate', async () => {
 	const menu = Menu.buildFromTemplate(template)
 	Menu.setApplicationMenu(menu);
 	mainWindow = await createMainWindow();
-
-	// mainWindow.webContents.
 })();
