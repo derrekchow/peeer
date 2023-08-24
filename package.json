@@ -1,7 +1,7 @@
 {
 	"name": "peeer",
 	"productName": "peeer",
-	"version": "0.0.0",
+	"version": "0.0.1-0",
 	"repository": "derrekchow/peeer",
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
@@ -46,15 +46,15 @@
 			"darkModeSupport": true,
 			"fileAssociations": [
 				{
-				  "ext": [
-					"jpg",
-					"jpeg",
-					"png",
-					"PNG",
-					"tiff"
-				  ],
-				  "description": "Image files",
-				  "role": "Viewer"
+					"ext": [
+						"jpg",
+						"jpeg",
+						"png",
+						"PNG",
+						"tiff"
+					],
+					"description": "Image files",
+					"role": "Viewer"
 				}
 			]
 		},
