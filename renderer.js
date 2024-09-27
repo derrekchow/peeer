@@ -6,6 +6,19 @@ let image = document.getElementById("image")
 let w = window.innerWidth
 let h = window.innerHeight
 let flipped = false
+var snapshotData = null
+
+document.body.onkeyup = function(e) {
+    const key = e.key
+    if (key == " " ||
+        e.code == "Space" ||      
+        e.keyCode == 32      
+    ) {
+        fullCanvas()
+        image.src = canvas.toDataURL()
+        restoreCanvas()
+    }
+}
 
 window.electronAPI.setImagePath((_event, path) => {
     image.src = path
@@ -141,8 +154,7 @@ function drawImage() {
     
     if (image.getAttribute('src')) {
         ctx.drawImage(image, 0, 0, w, h);
-        var imageCtx = ctx.getImageData(0, 0, w, h);
-        var imageData = imageCtx.data;
+        var imageData = ctx.getImageData(0, 0, w, h).data
 
         let pixels = 4 * w * h
         while (pixels--) {
@@ -152,8 +164,6 @@ function drawImage() {
 
     videoCtx.data = videoData;
     ctx.putImageData(videoCtx, 0, 0);
-
-    canvas
 }
 
 
